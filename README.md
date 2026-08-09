@@ -1,5 +1,7 @@
 # Diabetes Burden, Spending Priorities & Health System Capacity
 
+Summary: This repository contains a small, reproducible analysis that explores cross-country relationships between diabetes prevalence and government spending/health system capacity using World Bank World Development Indicators (WDI). It includes data-download tooling, a merge pipeline, analysis scripts/notebook, reproducible figures, and an optional GitHub Actions workflow to regenerate artifacts.
+
 A cross-country data analysis exploring how government spending priorities
 and health system capacity relate to non-communicable disease burden,
 using diabetes prevalence as the lens. Built with real World Bank World
