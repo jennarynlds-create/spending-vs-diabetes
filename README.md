@@ -37,7 +37,7 @@ GitHub mirror:
 | Life expectancy at birth, years | `SP.DYN.LE00.IN` |
 | Deaths from non-communicable disease, % | `SH.DTH.NCOM.ZS` |
 
-Raw CSVs are included in `data/`.
+Raw CSVs are included in `data/` (the workflow will not re-download them by default).
 
 ## Pipeline
 
@@ -52,6 +52,8 @@ Raw CSVs are included in `data/`.
    - Highest/lowest diabetes-burden countries in the dataset
    - `findings.md`, a written summary of results and caveats
 
+Note: `analyze.py` is the scriptable entry point for automated runs; `analyze.ipynb` is an annotated walkthrough of the same analysis for interactive exploration.
+
 ## Key findings (this run)
 
 - Military expenditure share showed a **near-zero correlation** with
@@ -63,6 +65,14 @@ Raw CSVs are included in `data/`.
   nations) rank among the highest-prevalence in the dataset, consistent
   with diabetes being a disease of both wealthy and rapidly urbanizing
   middle-income settings, not only low-income ones.
+
+Below are the most relevant charts from this run (click to view full-size):
+
+![Diabetes vs GDP by income tercile](diabetes_vs_gdp_income_group.png)
+
+![Diabetes vs Hospital Beds (per 1,000)](diabetes_vs_hospital_beds.png)
+
+![Diabetes vs Military Spending (% GDP)](diabetes_vs_military_spending.png)
 
 Full write-up with caveats in [`findings.md`](findings.md).
 
