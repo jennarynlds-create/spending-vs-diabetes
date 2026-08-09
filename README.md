@@ -55,7 +55,7 @@ Raw CSVs are included in `data/` (the workflow will not re-download them by defa
 Note: `analyze.py` is the scriptable entry point for automated runs; `analyze.ipynb` is an annotated walkthrough of the same analysis for interactive exploration.
 
 ## Key findings (this run)
-
+![Diabetes prevalence vs GDP per capita by income tercile](diabetes_vs_gdp_income_group.png)
 - Military expenditure share showed a **near-zero correlation** with
   diabetes prevalence (r ≈ 0.05) — spending share alone doesn't predict
   disease burden.
