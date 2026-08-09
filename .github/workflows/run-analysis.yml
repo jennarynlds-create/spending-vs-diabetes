@@ -1,0 +1,54 @@
+steps:
+  - name: Check out repository
+    uses: actions/checkout@v4
+    with:
+      persist-credentials: true
+
+  - name: Set up Python 3.10
+    uses: actions/setup-python@v4
+    with:
+      python-version: '3.10'
+
+  - name: Install runtime dependencies
+    run: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+
+  - name: Create output dirs
+    run: |
+      mkdir -p figures
+
+  - name: Optionally update raw WDI CSVs
+    if: ${{ github.event.inputs.update_data == 'true' }}
+    run: |
+      python data/fetch_wdi.py
+      git config user.name "github-actions[bot]"
+      git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      git add data/*.csv
+      if ! git diff --staged --quiet; then
+        git commit -m "Update raw WDI CSVs [skip ci]"
+        git push
+      else
+        echo "No changes to raw CSVs"
+      fi
+
+  - name: Run merge script
+    run: python load_and_merge.py
+
+  - name: Execute notebook to produce figures
+    run: |
+      python -m pip install nbclient nbformat
+      jupyter nbconvert --to notebook --execute analyze.ipynb --output executed.ipynb --ExecutePreprocessor.timeout=600
+
+  - name: Commit analysis outputs if changed
+    run: |
+      git config user.name "github-actions[bot]"
+      git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      git add merged_panel.csv figures || true
+      git add findings.md || true
+      if ! git diff --staged --quiet; then
+        git commit -m "Update analysis outputs (merged_panel, figures, findings) [skip ci]"
+        git push
+      else
+        echo "No changes to commit"
+      fi
