@@ -1,7 +1,5 @@
 # Diabetes Burden, Spending Priorities & Health System Capacity
 
-Summary: This repository contains a small, reproducible analysis that explores cross-country relationships between diabetes prevalence and government spending/health system capacity using World Bank World Development Indicators (WDI). It includes data-download tooling, a merge pipeline, analysis scripts/notebook, reproducible figures, and an optional GitHub Actions workflow to regenerate artifacts.
-
 A cross-country data analysis exploring how government spending priorities
 and health system capacity relate to non-communicable disease burden,
 using diabetes prevalence as the lens. Built with real World Bank World
@@ -37,7 +35,7 @@ GitHub mirror:
 | Life expectancy at birth, years | `SP.DYN.LE00.IN` |
 | Deaths from non-communicable disease, % | `SH.DTH.NCOM.ZS` |
 
-Raw CSVs are included in `data/` (the workflow will not re-download them by default).
+Raw CSVs are included in `data/`.
 
 ## Pipeline
 
@@ -45,34 +43,41 @@ Raw CSVs are included in `data/` (the workflow will not re-download them by defa
    Bank regional/income-group aggregate rows to keep individual countries
    only, and merges them into `merged_panel.csv` (209 countries), using
    each country's most recently reported value per indicator.
-2. **`analyze.py`** — computes correlations and produces:
+2. **`analyze.py`** (script) / **`analyze.ipynb`** (interactive notebook) —
+   run the same analysis; use `analyze.py` if you just want to regenerate
+   the outputs, or open `analyze.ipynb` to walk through the analysis
+   step by step. Both compute correlations and produce:
    - Diabetes prevalence vs. military expenditure (% GDP)
    - Diabetes prevalence vs. hospital bed capacity
    - Diabetes prevalence vs. GDP per capita, by income tercile
    - Highest/lowest diabetes-burden countries in the dataset
    - `findings.md`, a written summary of results and caveats
 
-Note: `analyze.py` is the scriptable entry point for automated runs; `analyze.ipynb` is an annotated walkthrough of the same analysis for interactive exploration.
-
 ## Key findings (this run)
-![Diabetes prevalence vs GDP per capita by income tercile](diabetes_vs_gdp_income_group.png)
-- Military expenditure share showed a **near-zero correlation** with
-  diabetes prevalence (r ≈ 0.05) — spending share alone doesn't predict
-  disease burden.
-- Hospital bed capacity also showed a weak correlation (r ≈ -0.07).
-- Diabetes prevalence does **not** fall cleanly with national income —
-  several higher-income countries (notably Gulf states and Pacific Island
-  nations) rank among the highest-prevalence in the dataset, consistent
-  with diabetes being a disease of both wealthy and rapidly urbanizing
-  middle-income settings, not only low-income ones.
 
-Below are the most relevant charts from this run (click to view full-size):
+**Military spending is not a meaningful predictor of diabetes burden.**
+Across 209 countries, the correlation between military expenditure (% of
+GDP) and diabetes prevalence was essentially flat (r ≈ 0.05).
 
-![Diabetes vs GDP by income tercile](diabetes_vs_gdp_income_group.png)
+![Diabetes prevalence vs. military expenditure as a share of GDP](diabetes_vs_military_spending.png)
 
-![Diabetes vs Hospital Beds (per 1,000)](diabetes_vs_hospital_beds.png)
+**Hospital bed capacity showed a similarly weak relationship** (r ≈ -0.07)
+— more hospital beds per capita did not track with lower diabetes
+prevalence in this cross-section.
 
-![Diabetes vs Military Spending (% GDP)](diabetes_vs_military_spending.png)
+![Diabetes prevalence vs. hospital beds per 1,000 people](diabetes_vs_hospital_beds.png)
+
+**Diabetes prevalence does not fall cleanly with national income.**
+Several higher-income countries — notably Gulf states and Pacific Island
+nations — rank among the highest-prevalence in the dataset, consistent
+with diabetes being a disease of both wealthy and rapidly urbanizing
+middle-income settings, not only low-income ones.
+
+![Diabetes prevalence vs. GDP per capita, grouped by income tercile](diabetes_vs_gdp_income_group.png)
+
+**The highest- and lowest-burden countries in the dataset:**
+
+![Countries with the highest and lowest diabetes prevalence](top_bottom_diabetes_burden.png)
 
 Full write-up with caveats in [`findings.md`](findings.md).
 
